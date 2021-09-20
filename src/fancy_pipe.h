@@ -10,7 +10,7 @@ void fancy_pipe_bus_exit(void);
 int fancy_pipe_driver_init(void);
 void fancy_pipe_driver_exit(void);
 
-int fancy_pipe_device_spawn(long id);
-int fancy_pipe_device_unspawn(struct device *dev, void *data);
+int fancy_pipe_device_add(long id);
+int fancy_pipe_device_remove(struct device *dev, void *data);
 
 #endif /* _FANCY_PIPE_H_ */

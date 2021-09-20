@@ -10,7 +10,7 @@ static void fancy_pipe_device_release(struct device *dev)
 {
 }
 
-int fancy_pipe_device_spawn(long id)
+int fancy_pipe_device_add(long id)
 {
     int ret;
     struct device *dev;
@@ -37,13 +37,17 @@ dev_reg_fail:
     return ret;
 }
 
-int fancy_pipe_device_unspawn(struct device *dev, void *data)
+int fancy_pipe_device_remove(struct device *dev, void *data)
 {
-    printk(KERN_DEBUG "%s: unspawning pipe %u\n", __FILE__, dev->id);
+    long n;
 
-    device_unregister(dev);
+    if (data)
+        n = *(long *)data;
 
-    kfree(dev);
+    if (!data || n == dev->id) {
+        device_unregister(dev);
+        kfree(dev);
+    }
 
     return 0;
 }
